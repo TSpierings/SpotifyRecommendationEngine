@@ -7,12 +7,12 @@ import {
   useLocation
 } from "react-router-dom";
 import { Provider } from 'react-redux';
-import { rootReducer } from './redux/index';
+import { rootReducer } from './store/index';
 import { createStore } from 'redux';
 
 import { Home } from './components/home/home';
 import { About } from './components/about/about';
-import { login } from './redux/modules/user';
+import { login } from './store/authentication/actions';
 import { isNull } from 'util';
 
 const store = createStore(rootReducer);
@@ -51,7 +51,7 @@ function PrivateRoute({ children, ...rest }: any) {
     <Route
       {...rest}
       render={({ location }) =>
-        !isNull(store.getState().user.access_token) ? (
+        !isNull(store.getState().authentication.access_token) ? (
           children
         ) : (
           <Redirect
@@ -66,22 +66,13 @@ function PrivateRoute({ children, ...rest }: any) {
   );
 }
 
-// A custom hook that builds on useLocation to parse
-// the query string for you.
-function useQuery() {
-  return new URLSearchParams(useLocation().hash);
-}
-
 function Authenticate({ children, ...rest }: any) {
-  let query = useQuery();
+  let query = new URLSearchParams(useLocation().hash);;
 
-  store.dispatch({
-    type: 'user/LOGIN',
-    payload: {
-      access_token: query.get('#access_token')!,
-      valid_until: Date.now().valueOf() + parseInt(query.get('expires_in')!) * 1000
-    }
-  });
+  const accessToken = query.get('#access_token')!;
+  const validUntil = Date.now().valueOf() + parseInt(query.get('expires_in')!) * 1000;
+  store.dispatch(login(accessToken, validUntil));
+
 
   console.log(store.getState());
 
