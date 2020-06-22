@@ -8,7 +8,8 @@ export class Home extends React.Component<{}, {}> {
     const responseType = 'token';
     const redirectUri = 'http://localhost:3000/authenticate';
     const state = Math.round(Math.random() * 1000000);
-    window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}&state=${state}`;
+    const scopes = 'user-read-private'
+    window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}&state=${state}&show_dialog=false&scopes=${scopes}`;
   }
 
   render() {
