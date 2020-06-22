@@ -13,7 +13,7 @@ import { createStore } from 'redux';
 import { Home } from './components/home/home';
 import { About } from './components/about/about';
 import { login } from './store/authentication/actions';
-import { isNull } from 'util';
+import { isNull, isNullOrUndefined } from 'util';
 
 const store = createStore(rootReducer);
 
@@ -41,17 +41,12 @@ function App() {
   );
 }
 
-const fakeAuth = {
-  isAuthenticated: false
-};
-
-
 function PrivateRoute({ children, ...rest }: any) {
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        !isNull(store.getState().authentication.access_token) ? (
+        isAuthenticated() ? (
           children
         ) : (
           <Redirect
@@ -66,15 +61,28 @@ function PrivateRoute({ children, ...rest }: any) {
   );
 }
 
+function isAuthenticated() {
+  const state = store.getState().authentication;
+
+  if (isNull(state.access_token) || isNull(state.valid_until)) {
+    return false;
+  }
+
+  return state.valid_until > Date.now();
+}
+
 function Authenticate({ children, ...rest }: any) {
   let query = new URLSearchParams(useLocation().hash);;
 
   const accessToken = query.get('#access_token')!;
-  const validUntil = Date.now().valueOf() + parseInt(query.get('expires_in')!) * 1000;
+
+  // User denied access
+  if(isNullOrUndefined(accessToken)) {
+    return <Redirect to="/"/>
+  }
+
+  const validUntil = Date.now() + parseInt(query.get('expires_in')!) * 1000;
   store.dispatch(login(accessToken, validUntil));
-
-
-  console.log(store.getState());
 
   return <Redirect to="/about"/>;
 }
