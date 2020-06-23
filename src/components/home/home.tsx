@@ -13,9 +13,17 @@ export class Home extends React.Component<{}, {}> {
   }
 
   render() {
-    return <div>
-      <h1>This is home</h1>
-      <button onClick={() => this.authenticate()}>Click here to authenticate Spotify</button>
+    return <div className="content">
+      <header>
+        <h1>Some sweet app name</h1>
+      </header>
+      <section className="info">
+        <p>This application requires permission to search the spotify library for tracks/artists/genres. For that we require your authorization.</p>
+        <p>By clicking the button below, you will be redirected to Spotify, there you need to login and authorize the app for the mentioned permissions.</p>
+      </section>
+      <section className="authorization">
+        <button onClick={() => this.authenticate()}>Click here to authenticate Spotify</button>
+      </section>      
     </div>;
   }
 }
