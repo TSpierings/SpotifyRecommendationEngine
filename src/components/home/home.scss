@@ -43,4 +43,20 @@
       }
     }
   }  
+
+  nav {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;    
+
+    a {
+      &:visited {
+        color: unset;
+      }
+
+      &:hover {
+        color: lighten($color: black, $amount: 25);
+      }
+    }
+  }
 }

@@ -34,9 +34,9 @@ function App() {
             <Recommender />
           </PrivateRoute>
 
-          <PrivateRoute exact path="/about">
+          <Route exact path="/about">
             <About />
-          </PrivateRoute>
+          </Route>
 
           <Route path="*">
             <Redirect to="/"/>
@@ -57,7 +57,7 @@ function PrivateRoute({ children, ...rest }: any) {
         ) : (
           <Redirect
             to={{
-              pathname: "/home",
+              pathname: "/",
               state: { from: location }
             }}
           />

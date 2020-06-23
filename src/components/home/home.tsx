@@ -24,6 +24,10 @@ export class Home extends React.Component<{}, {}> {
       <section className="authorization">
         <button onClick={() => this.authenticate()}>Click here to authenticate Spotify</button>
       </section>      
+      <nav>
+        <a href="/">Home</a> |
+        <a href="/about">About</a>
+      </nav>
     </div>;
   }
 }
