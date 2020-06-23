@@ -15,6 +15,7 @@ import { Home } from './components/home/home';
 import { About } from './components/about/about';
 import { login } from './store/authentication/actions';
 import { isNull, isNullOrUndefined } from 'util';
+import Recommender from './components/recommender/recommender';
 
 const store = createStore(rootReducer);
 
@@ -28,6 +29,10 @@ function App() {
           </Route>
 
           <Authenticate path="/authenticate"></Authenticate>
+
+          <PrivateRoute exact path="/recommender">
+            <Recommender />
+          </PrivateRoute>
 
           <PrivateRoute exact path="/about">
             <About />
@@ -85,7 +90,7 @@ function Authenticate({ children, ...rest }: any) {
   const validUntil = Date.now() + parseInt(query.get('expires_in')!) * 1000;
   store.dispatch(login(accessToken, validUntil));
 
-  return <Redirect to="/about"/>;
+  return <Redirect to="/recommender"/>;
 }
 
 export default App;
