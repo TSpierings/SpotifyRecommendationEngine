@@ -1,15 +1,24 @@
 import * as React from 'react';
-import './recommender.scss';
 import { connect } from 'react-redux';
 import { RootState } from '../../store';
-import { isNull } from 'util';
+import { fetchAndPopulateGenreSeeds } from '../../store/recommendations/actions';
+import './recommender.scss';
 
 const mapStateToProps = (state: RootState) => ({
-  access_token: state.authentication.access_token
+  access_token: state.authentication.access_token,
+  genres: state.recommendation.availableGenreSeeds
 });
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    fetchAndPopulateGenreSeeds: () => dispatch(fetchAndPopulateGenreSeeds())
+  }
+}
 
 interface RecommenderProps {
   access_token: string | null;
+  genres: Array<string> | null;
+  fetchAndPopulateGenreSeeds(): any;
 };
 
 export class ConnectedRecommender extends React.Component<RecommenderProps, {}> {
@@ -18,30 +27,44 @@ export class ConnectedRecommender extends React.Component<RecommenderProps, {}> 
     super(props);
   }
 
+  componentDidMount() {
+    this.props.fetchAndPopulateGenreSeeds();
+  }
+
   recommend() {
-    if (isNull( this.props.access_token)) {
-      console.log('no access token');
-      return;
-    }
 
-    const recommendationApi = 'https://api.spotify.com/v1/recommendations';
-    const seedGenres = 'forro';
-    const request = new Request(`${recommendationApi}?seed_genres=${seedGenres}`);
-    request.headers.set('Authorization', 'Bearer ' + this.props.access_token);
-
-    fetch(request)
-      .then(response => console.log(response))
-      .catch(error => console.log(error));
   }
 
   render() {
-    return <>
-      <h1>This is recommender</h1>
-      <button onClick={() => this.recommend()}>Recommend something</button>
-    </>;
+    return <div className="recommender">
+      <header>
+        <h1>Find me some Grailz</h1>
+      </header>
+      <section className="seeds">
+        <div className="seed-slots">
+          <div className="slot"></div>
+          <div className="slot"></div>
+          <div className="slot"></div>
+          <div className="slot"></div>
+          <div className="slot"></div>
+        </div>
+
+        <p>You can select up to 5 seeds to base your recommendations on.</p>        
+      </section>
+      <section className="recommend-button">
+        <button onClick={() => this.recommend()}>Recommend something</button>  
+      </section>
+      <nav>
+        <a href="/">Home</a> |
+        <a href="/about">About</a>
+      </nav>
+    </div>;
   }
 }
 
-const Recommender = connect(mapStateToProps) (ConnectedRecommender);
+const Recommender = connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (ConnectedRecommender);
 
 export default Recommender;
