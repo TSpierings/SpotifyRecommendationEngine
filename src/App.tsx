@@ -9,7 +9,8 @@ import {
 } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { rootReducer } from './store/index';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 import { Home } from './components/home/home';
 import { About } from './components/about/about';
@@ -17,7 +18,7 @@ import { login } from './store/authentication/actions';
 import { isNull, isNullOrUndefined } from 'util';
 import Recommender from './components/recommender/recommender';
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 function App() {
   return (
@@ -30,9 +31,9 @@ function App() {
 
           <Authenticate path="/authenticate"></Authenticate>
 
-          <PrivateRoute exact path="/recommender">
+          <Route exact path="/recommender">
             <Recommender />
-          </PrivateRoute>
+          </Route>
 
           <Route exact path="/about">
             <About />
