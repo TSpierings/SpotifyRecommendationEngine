@@ -3,5 +3,36 @@
 }
 
 h1 {
-  font-family: 'Major Mono Display', monospace;  
+  font-family: 'Major Mono Display', monospace;
+  margin: 0;
+  padding: 20px;
+}
+
+button {
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: white;
+  padding: 10px;
+  cursor: pointer;
+  transition: linear 100ms background-color;
+
+  &:hover {
+    background-color: darken($color: white, $amount: 5);
+  }
+}
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;    
+
+  a {
+    &:visited {
+      color: unset;
+    }
+
+    &:hover {
+      color: lighten($color: black, $amount: 25);
+    }
+  }
 }
