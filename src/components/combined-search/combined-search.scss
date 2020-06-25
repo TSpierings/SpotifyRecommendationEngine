@@ -1,0 +1,14 @@
+.combined-search {
+  display: flex;
+  flex-direction: column;
+
+  .search-results {
+    display: flex;
+    flex-direction: row;
+
+    ul {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

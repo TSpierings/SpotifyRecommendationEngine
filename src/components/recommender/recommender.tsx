@@ -6,8 +6,7 @@ import './recommender.scss';
 import CombinedSearch from '../combined-search/combined-search';
 
 const mapStateToProps = (state: RootState) => ({
-  access_token: state.authentication.access_token,
-  genres: state.recommendation.availableGenreSeeds
+  access_token: state.authentication.access_token
 });
 
 function mapDispatchToProps(dispatch: any) {
@@ -18,7 +17,6 @@ function mapDispatchToProps(dispatch: any) {
 
 interface RecommenderProps {
   access_token: string | null;
-  genres: Array<string> | null;
   fetchAndPopulateGenreSeeds(): any;
 };
 
