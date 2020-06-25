@@ -4,6 +4,8 @@ import { ThunkAction } from 'redux-thunk';
 import { RootState } from '..';
 import { Action } from 'redux';
 import { SearchTypes, getSearchItems } from '../../api/search';
+import { Track } from '../../interfaces/spotify/track';
+import { Artist } from '../../interfaces/spotify/artist';
 
 export function populateGenreSeeds(seeds: Array<string>): RecommendationActionTypes {
   return {
@@ -17,7 +19,7 @@ export function fetchAndPopulateGenreSeeds(): ThunkAction<void, RootState, unkno
     try {
       const response = await getAvailableGenreSeeds(getState().authentication.access_token);
       const data = await response.json();
-      return dispatch(populateGenreSeeds(data));
+      return dispatch(populateGenreSeeds(data.genres));
     }
     catch (error) {
       return console.log(error);
@@ -25,10 +27,10 @@ export function fetchAndPopulateGenreSeeds(): ThunkAction<void, RootState, unkno
   }
 }
 
-export function searchItems(data: any): RecommendationActionTypes {
+export function searchItems(artists: Array<Artist>, tracks: Array<Track>): RecommendationActionTypes {
   return {
     type: SEARCH_ITEMS,
-    payload: data
+    payload: { artists, tracks }
   }
 }
 
@@ -37,7 +39,10 @@ export function fetchSearchItems(query: string, types: Array<SearchTypes>): Thun
     try {
       const response = await getSearchItems(getState().authentication.access_token, query, types);
       const data = await response.json();
-      return dispatch(searchItems(data));
+      return dispatch(searchItems(
+        data.artists.items,
+        data.tracks.items
+      ));
     }
     catch (error) {
       return console.log(error);

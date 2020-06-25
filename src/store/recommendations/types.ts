@@ -17,7 +17,7 @@ interface PopulateGenreSeedsAction {
 
 interface SearchItemsAction {
   type: typeof SEARCH_ITEMS,
-  payload: any
+  payload: { artists: Array<Artist>, tracks: Array<Track> }
 }
 
 export type RecommendationActionTypes = PopulateGenreSeedsAction | SearchItemsAction;

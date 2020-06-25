@@ -16,15 +16,11 @@ export function recommendationReducer(
         availableGenreSeeds: action.payload
       });
     case SEARCH_ITEMS:
-      return parseSearchItemResult(state, action.payload);
+      return Object.assign({}, state, {
+        foundArtists: action.payload.artists,
+        foundTracks: action.payload.tracks
+      });
     default:
       return state;
   }
-}
-
-function parseSearchItemResult(state: RecommendationState, data: any): RecommendationState {
-  return Object.assign({}, state, {
-    foundArtists: data.artists.items,
-    foundTracks: data.tracks.items
-  });
 }
