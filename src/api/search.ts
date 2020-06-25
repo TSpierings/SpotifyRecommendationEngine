@@ -16,6 +16,14 @@ export function getSearchItems(
   query: string,
   types: Array<SearchTypes>
 ): Promise<Response> {
+  if (!query) {
+    return Promise.reject('No search query'); 
+  }
+
+  if (!types || types.length === 0) {
+    return Promise.reject('No types')
+  }
+
   const apiUri = 'https://api.spotify.com/v1/search';
   const request = new Request(`${apiUri}?q=${query}&type=${types.join(',')}`);
   request.headers.set('Authorization', 'Bearer ' + accessToken);

@@ -6,7 +6,7 @@ import { SearchTypes } from '../../api/search';
 import { connect } from 'react-redux';
 import { Artist } from '../../interfaces/spotify/artist';
 import { Track } from '../../interfaces/spotify/track';
-import { isNull } from 'util';
+import { debounce, Cancelable } from 'lodash';
 
 const mapStateToProps = (state: RootState) => ({
   access_token: state.authentication.access_token,
@@ -30,24 +30,27 @@ interface CombinedSearchProps {
 };
 
 class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
+  private searchValue = '';
+  private debouncedSearch = debounce(this.search, 500);
 
   constructor(props: CombinedSearchProps) {
     super(props);
   }
 
-  search() {
-    this.props.searchItems('test', [SearchTypes.Artist, SearchTypes.Track]);
+  search (query: string) {
+    this.props.searchItems(query, [SearchTypes.Artist, SearchTypes.Track]);
+    this.searchValue = query;
   }
 
-  componentDidUpdate() {
-
+  inputChange = (value: string) => {
+    this.debouncedSearch.cancel();
+    this.debouncedSearch(value);
   }
 
   render() {
     return <div className="combined-search">
         <h1>This is CombinedSearch</h1>
-        <input type="text"></input>
-        <button onClick={() => this.search()}>Search!</button>
+        <input type="text" onChange={(e) => this.inputChange(e.target.value)}></input>
         <section className="search-results">
           <ul>
             {this.props.foundArtists?.map(artist => <li key={artist.id}>{artist.name}</li>)}
@@ -56,7 +59,7 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
             {this.props.foundTracks?.map(track => <li key={track.id}>{track.name}</li>)}
           </ul>
           <ul>
-            {this.props.genres?.filter(genre => genre.includes('metal'))?.map(genre => <li key={genre}>{genre}</li>)}
+            {this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false)?.map(genre => <li key={genre}>{genre}</li>)}
           </ul>
         </section>
       </div>;
