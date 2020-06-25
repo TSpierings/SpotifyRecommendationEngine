@@ -31,9 +31,9 @@ function App() {
 
           <Authenticate path="/authenticate"></Authenticate>
 
-          <Route exact path="/recommender">
+          <PrivateRoute exact path="/recommender">
             <Recommender />
-          </Route>
+          </PrivateRoute>
 
           <Route exact path="/about">
             <About />

@@ -6,7 +6,7 @@ export const AuthenticationDetails = {
   clientId: 'b555c04661b94caabdbf19cdc57170b5',
   responseType: 'token',
   redirectUri: 'http://localhost:3000/authenticate',
-  scopes: ''
+  scopes: 'user-read-private'
 }
 
 /**
