@@ -1,0 +1,28 @@
+.info {
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+  }
+
+  h2 {
+
+  }
+}
+
+.genres {
+  display: flex;
+
+  span {
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin: 4px 1px;
+    padding: 0 4px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}

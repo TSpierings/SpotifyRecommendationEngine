@@ -1,7 +1,9 @@
+import { Image } from "./image";
+
 export interface Artist extends SimplifiedArtist {
   followers: any,
   genres: Array<string>,
-  images: any,
+  images: Array<Image>,
   popularity: number,
 }
 

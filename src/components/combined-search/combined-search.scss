@@ -2,13 +2,35 @@
   display: flex;
   flex-direction: column;
 
+  input {
+    margin: 2px 2px 2px 20px;
+  }
+
   .search-results {
     display: flex;
     flex-direction: row;
+    margin-left: 20px;
 
     ul {
       display: flex;
       flex-direction: column;
+      list-style: none;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        // border: 1px solid black;
+        margin: 2px 0;
+        border-radius: 3px;
+        transition: linear 100ms background-color;
+
+        &:hover {
+          background-color: darken($color: white, $amount: 5);
+          cursor: pointer;
+        }
+      }
+
+      
     }
   }
 }

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { Artist } from '../../interfaces/spotify/artist';
 import { Track } from '../../interfaces/spotify/track';
 import { debounce, Cancelable } from 'lodash';
+import { ArtistCard } from '../artist-card/artist-card';
 
 const mapStateToProps = (state: RootState) => ({
   access_token: state.authentication.access_token,
@@ -53,7 +54,7 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
         <input type="text" onChange={(e) => this.inputChange(e.target.value)}></input>
         <section className="search-results">
           <ul>
-            {this.props.foundArtists?.map(artist => <li key={artist.id}>{artist.name}</li>)}
+            {this.props.foundArtists?.map(artist => <li><ArtistCard key={artist.id} artist={artist}/></li>)}
           </ul>
           <ul>
             {this.props.foundTracks?.map(track => <li key={track.id}>{track.name}</li>)}
