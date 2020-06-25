@@ -62,10 +62,19 @@
     }
   }
 
-  .recommend-button {
-    align-items: center;
-    justify-content: center;
+  .tools {
+    flex-direction: row;
     flex: 1;
+
+    >* {
+      flex: 1;
+    }
+
+    .recommend-button {
+      align-items: center;
+      justify-content: center;
+    }
   }
+  
 
 }

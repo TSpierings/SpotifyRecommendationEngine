@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../../store';
 import { fetchAndPopulateGenreSeeds } from '../../store/recommendations/actions';
 import './recommender.scss';
+import CombinedSearch from '../combined-search/combined-search';
 
 const mapStateToProps = (state: RootState) => ({
   access_token: state.authentication.access_token,
@@ -21,7 +22,7 @@ interface RecommenderProps {
   fetchAndPopulateGenreSeeds(): any;
 };
 
-export class ConnectedRecommender extends React.Component<RecommenderProps, {}> {
+class ConnectedRecommender extends React.Component<RecommenderProps, {}> {
 
   constructor(props: RecommenderProps) {
     super(props);
@@ -51,8 +52,11 @@ export class ConnectedRecommender extends React.Component<RecommenderProps, {}> 
 
         <p>You can select up to 5 seeds to base your recommendations on.</p>        
       </section>
-      <section className="recommend-button">
-        <button onClick={() => this.recommend()}>Recommend something</button>  
+      <section className="tools">
+        <CombinedSearch />
+        <section className="recommend-button">
+          <button onClick={() => this.recommend()}>Recommend something</button>  
+        </section>
       </section>
       <nav>
         <a href="/">Home</a> |
