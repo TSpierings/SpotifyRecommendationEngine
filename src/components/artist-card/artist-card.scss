@@ -15,6 +15,7 @@
 
 .genres {
   display: flex;
+  flex-wrap: wrap;
 
   span {
     background-color: black;

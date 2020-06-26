@@ -15,14 +15,19 @@
       display: flex;
       flex-direction: column;
       list-style: none;
+      width: 1/3;
+      flex: 1;
 
       li {
         display: flex;
         flex-direction: column;
-        // border: 1px solid black;
         margin: 2px 0;
-        border-radius: 3px;
         transition: linear 100ms background-color;
+        border-bottom: 1px solid black;
+
+        &:last-of-type {
+          border: none;
+        }
 
         &:hover {
           background-color: darken($color: white, $amount: 5);

@@ -16,7 +16,7 @@ export class ArtistCard extends React.Component<ArtistCardProps, {}> {
     return <>
       <p className="info">
         <img src={this.props.artist.images[0]?.url}/>
-        <h2>{this.props.artist.name}</h2>
+        <h3>{this.props.artist.name}</h3>
       </p>      
       <p className='genres'>
         {this.props.artist.genres.map(genre => <span key={genre}>{genre}</span>)}
