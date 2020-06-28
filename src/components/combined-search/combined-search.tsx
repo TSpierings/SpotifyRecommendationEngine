@@ -54,21 +54,19 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
     return <div className="combined-search">
         <h1>This is CombinedSearch</h1>
         <input type="text" onChange={(e) => this.inputChange(e.target.value)}></input>
-        <section className="search-results">
-          <ul>
-            <label>Artists</label>
-            {this.props.foundArtists?.map(artist => <li><ArtistCard key={artist.id} artist={artist}/></li>)}
-          </ul>
-          <ul>
-            <label>Tracks</label>
-            {this.props.foundTracks?.map(track => <li><TrackCard key={track.id} track={track}/></li>)}
-          </ul>
-          <ul>
-            <label>Genres</label>
-            {this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false)?.map(genre =>
-              <li key={genre} className="genre"><h3>{capitalize(genre)}</h3></li>)}
-          </ul>
-        </section>
+        <ul className="search-results">
+
+          <label className="artist">Artists</label>
+          {this.props.foundArtists?.map(artist => <li className="artist"><ArtistCard key={artist.id} artist={artist}/></li>)}
+          
+          <label className="track">Tracks</label>
+          {this.props.foundTracks?.map(track => <li className="track"><TrackCard key={track.id} track={track}/></li>)}
+
+          <label className="genre">Genres</label>
+          {this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false)?.map(genre =>
+            <li className="genre" key={genre}><h3>{capitalize(genre)}</h3></li>)}
+
+        </ul>
       </div>;
   }
 }

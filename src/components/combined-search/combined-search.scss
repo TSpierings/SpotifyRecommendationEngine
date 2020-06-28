@@ -7,42 +7,44 @@
   }
 
   .search-results {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 2fr 2fr 1fr;
+    column-gap: 10px;
     margin-left: 20px;
 
-    ul {
+    .artist {
+      grid-column: 1;
+    }
+
+    .track {
+      grid-column: 2;
+    }
+
+    .genre {
+      grid-column: 3;
+
+      h3 {
+        padding-top: 14px;
+      }
+    }
+
+    label {
+      font-family: 'Major Mono Display', monospace;
+    }
+
+    li {
       display: flex;
       flex-direction: column;
-      list-style: none;
-      width: 1/3;
-      flex: 1;
+      justify-content: space-between;
+      padding-top: 4px;
+      transition: linear 100ms background-color;
+      border-bottom: 1px solid black;
 
-      li {
-        display: flex;
-        flex-direction: column;
-        padding-top: 2px;
-        transition: linear 100ms background-color;
-        border-bottom: 1px solid black;
-
-        &:last-of-type {
-          border: none;
-        }
-
-        &:hover {
-          background-color: darken($color: white, $amount: 5);
-          cursor: pointer;
-        }
-
-        &.genre {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 50px;
-        }
+      &:hover {
+        background-color: darken($color: white, $amount: 5);
+        cursor: pointer;
       }
-
-      
     }
   }
 }
