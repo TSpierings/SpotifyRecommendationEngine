@@ -1,0 +1,19 @@
+.track-name {
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+  }
+
+  h3 {
+
+  }
+}
+
+.track-info {
+  display: flex;
+  justify-content: space-between;
+}

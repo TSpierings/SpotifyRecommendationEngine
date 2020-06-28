@@ -6,8 +6,10 @@ import { SearchTypes } from '../../api/search';
 import { connect } from 'react-redux';
 import { Artist } from '../../interfaces/spotify/artist';
 import { Track } from '../../interfaces/spotify/track';
-import { debounce, Cancelable } from 'lodash';
+import { debounce } from 'lodash';
 import { ArtistCard } from '../artist-card/artist-card';
+import { TrackCard } from '../track-card/track-card';
+import { capitalize } from '../../util/capitalize';
 
 const mapStateToProps = (state: RootState) => ({
   access_token: state.authentication.access_token,
@@ -54,13 +56,17 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
         <input type="text" onChange={(e) => this.inputChange(e.target.value)}></input>
         <section className="search-results">
           <ul>
+            <label>Artists</label>
             {this.props.foundArtists?.map(artist => <li><ArtistCard key={artist.id} artist={artist}/></li>)}
           </ul>
           <ul>
-            {this.props.foundTracks?.map(track => <li key={track.id}>{track.name}</li>)}
+            <label>Tracks</label>
+            {this.props.foundTracks?.map(track => <li><TrackCard key={track.id} track={track}/></li>)}
           </ul>
           <ul>
-            {this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false)?.map(genre => <li key={genre}>{genre}</li>)}
+            <label>Genres</label>
+            {this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false)?.map(genre =>
+              <li key={genre} className="genre"><h3>{capitalize(genre)}</h3></li>)}
           </ul>
         </section>
       </div>;

@@ -21,7 +21,7 @@
       li {
         display: flex;
         flex-direction: column;
-        margin: 2px 0;
+        padding-top: 2px;
         transition: linear 100ms background-color;
         border-bottom: 1px solid black;
 
@@ -32,6 +32,13 @@
         &:hover {
           background-color: darken($color: white, $amount: 5);
           cursor: pointer;
+        }
+
+        &.genre {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 50px;
         }
       }
 
