@@ -66,14 +66,15 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
           {this.props.foundArtists?.length === 0 ?
             <span>No artists found</span> :
             this.props.foundArtists?.map(artist => <li key={artist.id} onClick={() =>
-              this.props.setSeed(artist.name, this.props.activeSeedSlot!)}><ArtistCard artist={artist}/></li>)}
+              this.props.setSeed(artist, this.props.activeSeedSlot!)}><ArtistCard artist={artist}/></li>)}
         </div>
 
         <ul className="track">
           <label>Tracks</label>
           {this.props.foundTracks?.length === 0 ?
             <span>No tracks found</span> :
-            this.props.foundTracks?.map(track => <li key={track.id}><TrackCard track={track} /></li>)}
+            this.props.foundTracks?.map(track => <li key={track.id} onClick={() =>
+              this.props.setSeed(track, this.props.activeSeedSlot!)}><TrackCard track={track} /></li>)}
         </ul>
 
         <ul className="genre">
@@ -81,7 +82,7 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
           {matchingGenres?.length === 0 && this.searchValue ?
             <span>No genres found</span> :
             this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false)?.map(genre =>
-              <li key={genre}><h3>{capitalize(genre)}</h3></li>)}
+              <li key={genre} onClick={() => this.props.setSeed(genre, this.props.activeSeedSlot!)}><h3>{capitalize(genre)}</h3></li>)}
         </ul>
       </section>
     </div>;

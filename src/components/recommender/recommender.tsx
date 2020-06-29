@@ -6,6 +6,7 @@ import { RootState } from '../../store';
 import { fetchAndPopulateGenreSeeds, setActiveSeedSlot } from '../../store/recommendations/actions';
 import CombinedSearch from '../combined-search/combined-search';
 import './recommender.scss';
+import { SeedSlot } from '../seed-slot/seed-slot';
 
 const mapStateToProps = (state: RootState) => ({
   access_token: state.authentication.access_token,
@@ -46,18 +47,18 @@ class ConnectedRecommender extends React.Component<RecommenderProps, {}> {
         <h1>Find me some Grailz</h1>
       </header>
       <section className="seeds">
-        <div className="seed-slots">
+        <ul className="seed-slots">
           {this.props.selectedSeeds.map((seed, index) =>
-          <div key={index} className="slot" onClick={() => this.props.setActiveSeedSlot(index)}>{seed?.toString()}</div>
+            <li key={index} className="slot" onClick={() => this.props.setActiveSeedSlot(index)}><SeedSlot seed={seed} /></li>
           )}
-        </div>
+        </ul>
 
-        <p>You can select up to 5 seeds to base your recommendations on.</p>        
+        <p>You can select up to 5 seeds to base your recommendations on.</p>
       </section>
       <section className="tools">
         <CombinedSearch />
         <section className="recommend-button">
-          <button onClick={() => this.recommend()}>Recommend something</button>  
+          <button onClick={() => this.recommend()}>Recommend something</button>
         </section>
       </section>
       <nav>
@@ -71,6 +72,6 @@ class ConnectedRecommender extends React.Component<RecommenderProps, {}> {
 const Recommender = connect(
   mapStateToProps,
   mapDispatchToProps
-) (ConnectedRecommender);
+)(ConnectedRecommender);
 
 export default Recommender;
