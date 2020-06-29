@@ -61,14 +61,14 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
           <label>Artists</label>
           {this.props.foundArtists?.length === 0 ?
             <span>No artists found</span> :
-            this.props.foundArtists?.map(artist => <li><ArtistCard key={artist.id} artist={artist} /></li>)}
+            this.props.foundArtists?.map(artist => <li  key={artist.id}><ArtistCard artist={artist} /></li>)}
         </div>
 
         <ul className="track">
           <label>Tracks</label>
           {this.props.foundTracks?.length === 0 ?
             <span>No tracks found</span> :
-            this.props.foundTracks?.map(track => <li><TrackCard key={track.id} track={track} /></li>)}
+            this.props.foundTracks?.map(track => <li key={track.id}><TrackCard track={track} /></li>)}
         </ul>
 
         <ul className="genre">

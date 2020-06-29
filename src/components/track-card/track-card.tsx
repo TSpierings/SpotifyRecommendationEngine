@@ -14,10 +14,10 @@ export class TrackCard extends React.Component<TrackCardProps, {}> {
 
   render() {
     return <>
-      <p className="track-name">
+      <div className="track-name">
         <img src={this.props.track.album.images[0]?.url}/>
         <h3>{this.props.track.name}</h3>
-      </p>      
+      </div>      
       <p className='track-info'>
         <span>{this.props.track.artists[0].name}</span>
         <span>{this.props.track.album.name}</span>
