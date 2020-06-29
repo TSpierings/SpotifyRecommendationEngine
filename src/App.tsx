@@ -21,12 +21,19 @@ import Recommender from './components/recommender/recommender';
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 function App() {
+  const accessToken = localStorage.getItem('access_token');
+  const validUntil = localStorage.getItem('valid_until');
+
+  if (accessToken && validUntil) {
+    store.dispatch(login(accessToken, parseInt(validUntil)));
+  }
+
   return (
     <Provider store={store}>
       <Router>
         <Switch>
           <Route exact path="/">
-            <Home />
+            {isAuthenticated() ? <Redirect to="/recommender" /> : <Home />}}
           </Route>
 
           <Authenticate path="/authenticate"></Authenticate>
@@ -90,6 +97,9 @@ function Authenticate({ children, ...rest }: any) {
 
   const validUntil = Date.now() + parseInt(query.get('expires_in')!) * 1000;
   store.dispatch(login(accessToken, validUntil));
+
+  localStorage.setItem('access_token', accessToken);
+  localStorage.setItem('valid_until', validUntil.toString());
 
   return <Redirect to="/recommender"/>;
 }
