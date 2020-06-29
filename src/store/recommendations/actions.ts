@@ -1,13 +1,11 @@
-import { RecommendationActionTypes, POPULATE_GENRE_SEEDS, SEARCH_ITEMS } from './types';
-import { getAvailableGenreSeeds } from '../../api/recommendations';
+import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '..';
-import { Action } from 'redux';
-import { SearchTypes, getSearchItems } from '../../api/search';
-import { Track } from '../../interfaces/spotify/track';
+import { getAvailableGenreSeeds } from '../../api/recommendations';
+import { getSearchItems, SearchTypes } from '../../api/search';
 import { Artist } from '../../interfaces/spotify/artist';
-import { mockResult } from '../../api/mock/search-result';
-import { mockGenreSeeds } from '../../api/mock/genre-seeds';
+import { Track } from '../../interfaces/spotify/track';
+import { POPULATE_GENRE_SEEDS, RecommendationActionTypes, SEARCH_ITEMS, SET_SEED } from './types';
 
 export function populateGenreSeeds(seeds: Array<string>): RecommendationActionTypes {
   return {
@@ -55,5 +53,12 @@ export function fetchSearchItems(query: string, types: Array<SearchTypes>): Thun
     catch (error) {
       return console.log(error);
     }
+  }
+}
+
+export function setSeed(seed: Artist | Track | string, index: number): RecommendationActionTypes {
+  return {
+    type: SET_SEED,
+    payload: { seed, index }
   }
 }

@@ -1,9 +1,10 @@
-import { RecommendationActionTypes, RecommendationState, POPULATE_GENRE_SEEDS, SEARCH_ITEMS } from './types';
+import { POPULATE_GENRE_SEEDS, RecommendationActionTypes, RecommendationState, SEARCH_ITEMS, SET_SEED } from './types';
 
 const initialState: RecommendationState = {
   availableGenreSeeds: null,
   foundArtists: null,
-  foundTracks: null
+  foundTracks: null,
+  selectedSeeds: [null, null, null, null, null]
 };
 
 export function recommendationReducer(
@@ -20,6 +21,15 @@ export function recommendationReducer(
         foundArtists: action.payload.artists,
         foundTracks: action.payload.tracks
       });
+    case SET_SEED:
+      const seeds = state.selectedSeeds;
+      seeds[action.payload.index] = action.payload.seed;
+
+      console.log(`Selected ${action.payload.seed} to ${action.payload.index}`);
+      
+      return Object.assign({}, state, {
+        selectedSeeds: seeds
+      })
     default:
       return state;
   }

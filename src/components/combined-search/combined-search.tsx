@@ -1,15 +1,15 @@
+import { debounce } from 'lodash';
 import * as React from 'react';
-import './combined-search.scss';
-import { RootState } from '../../store';
-import { fetchSearchItems } from '../../store/recommendations/actions';
-import { SearchTypes } from '../../api/search';
 import { connect } from 'react-redux';
+import { SearchTypes } from '../../api/search';
 import { Artist } from '../../interfaces/spotify/artist';
 import { Track } from '../../interfaces/spotify/track';
-import { debounce } from 'lodash';
+import { RootState } from '../../store';
+import { fetchSearchItems, setSeed } from '../../store/recommendations/actions';
+import { capitalize } from '../../util/capitalize';
 import { ArtistCard } from '../artist-card/artist-card';
 import { TrackCard } from '../track-card/track-card';
-import { capitalize } from '../../util/capitalize';
+import './combined-search.scss';
 
 const mapStateToProps = (state: RootState) => ({
   access_token: state.authentication.access_token,
@@ -20,7 +20,8 @@ const mapStateToProps = (state: RootState) => ({
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    searchItems: (query: string, types: Array<SearchTypes>) => dispatch(fetchSearchItems(query, types))
+    searchItems: (query: string, types: Array<SearchTypes>) => dispatch(fetchSearchItems(query, types)),
+    setSeed: (seed: Artist | Track | string, index: number) => dispatch(setSeed(seed, index))
   }
 }
 
@@ -30,6 +31,7 @@ interface CombinedSearchProps {
   foundTracks: Array<Track> | null;
   genres: Array<string> | null;
   searchItems(query: string, types: Array<SearchTypes>): any;
+  setSeed(seed: Artist | Track | string, index: number): any;
 };
 
 class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
@@ -61,7 +63,7 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
           <label>Artists</label>
           {this.props.foundArtists?.length === 0 ?
             <span>No artists found</span> :
-            this.props.foundArtists?.map(artist => <li  key={artist.id}><ArtistCard artist={artist} /></li>)}
+            this.props.foundArtists?.map(artist => <li key={artist.id} onClick={() => this.props.setSeed(artist, 0)}><ArtistCard artist={artist}/></li>)}
         </div>
 
         <ul className="track">
