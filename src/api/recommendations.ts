@@ -14,9 +14,9 @@ export function getAvailableGenreSeeds(accessToken: string): Promise<Response> {
  */
 export function getRecommendations(
   accessToken: string,
+  seedArtists: Array<string> = [],
   seedTracks: Array<string> = [],
-  seedGenres: Array<string> = [],
-  seedArtists: Array<string> = []
+  seedGenres: Array<string> = []
 ): Promise<Response> {
   const apiUri = 'https://api.spotify.com/v1/recommendations';
   const request = new Request(`${apiUri}?seed_tracks=${seedTracks.join(',')}&seed_genres=${seedGenres.join(',')}&seed_artists=${seedArtists.join(',')}`);
