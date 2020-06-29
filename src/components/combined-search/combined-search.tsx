@@ -40,7 +40,7 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
     super(props);
   }
 
-  search (query: string) {
+  search(query: string) {
     this.props.searchItems(query, [SearchTypes.Artist, SearchTypes.Track]);
     this.searchValue = query;
   }
@@ -51,29 +51,41 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
   }
 
   render() {
+    const matchingGenres = this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false);
+
     return <div className="combined-search">
-        <h1>This is CombinedSearch</h1>
-        <input type="text" onChange={(e) => this.inputChange(e.target.value)}></input>
-        <ul className="search-results">
+      <input type="text" onChange={(e) => this.inputChange(e.target.value)}></input>
+      <section className="search-results">
 
-          <label className="artist">Artists</label>
-          {this.props.foundArtists?.map(artist => <li className="artist"><ArtistCard key={artist.id} artist={artist}/></li>)}
-          
-          <label className="track">Tracks</label>
-          {this.props.foundTracks?.map(track => <li className="track"><TrackCard key={track.id} track={track}/></li>)}
+        <div className="artist">
+          <label>Artists</label>
+          {this.props.foundArtists?.length === 0 ?
+            <span>No artists found</span> :
+            this.props.foundArtists?.map(artist => <li><ArtistCard key={artist.id} artist={artist} /></li>)}
+        </div>
 
-          <label className="genre">Genres</label>
-          {this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false)?.map(genre =>
-            <li className="genre" key={genre}><h3>{capitalize(genre)}</h3></li>)}
-
+        <ul className="track">
+          <label>Tracks</label>
+          {this.props.foundTracks?.length === 0 ?
+            <span>No tracks found</span> :
+            this.props.foundTracks?.map(track => <li><TrackCard key={track.id} track={track} /></li>)}
         </ul>
-      </div>;
+
+        <ul className="genre">
+          <label>Genres</label>
+          {matchingGenres?.length === 0 && this.searchValue ?
+            <span>No genres found</span> :
+            this.props.genres?.filter(genre => this.searchValue ? genre.includes(this.searchValue) : false)?.map(genre =>
+              <li key={genre}><h3>{capitalize(genre)}</h3></li>)}
+        </ul>
+      </section>
+    </div>;
   }
 }
 
 const CombinedSearch = connect(
   mapStateToProps,
   mapDispatchToProps
-) (ConnectedCombinedSearch);
+)(ConnectedCombinedSearch);
 
 export default CombinedSearch;

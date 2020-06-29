@@ -3,7 +3,7 @@
   flex-direction: column;
 
   input {
-    margin: 2px 2px 2px 20px;
+    margin: 2px 10px 10px 20px;
   }
 
   .search-results {
@@ -14,15 +14,27 @@
     margin-left: 20px;
 
     .artist {
-      grid-column: 1;
+      display: contents;
+
+      >* {
+        grid-column: 1;
+      }      
     }
 
     .track {
-      grid-column: 2;
+      display: contents;
+
+      >* {
+        grid-column: 2;
+      } 
     }
 
     .genre {
-      grid-column: 3;
+      display: contents;
+
+      >* {
+        grid-column: 3;
+      } 
 
       h3 {
         padding-top: 14px;
@@ -31,6 +43,7 @@
 
     label {
       font-family: 'Major Mono Display', monospace;
+      margin-bottom: 10px;
     }
 
     li {
