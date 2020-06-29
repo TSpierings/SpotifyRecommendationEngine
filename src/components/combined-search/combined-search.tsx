@@ -15,7 +15,8 @@ const mapStateToProps = (state: RootState) => ({
   access_token: state.authentication.access_token,
   foundArtists: state.recommendation.foundArtists,
   foundTracks: state.recommendation.foundTracks,
-  genres: state.recommendation.availableGenreSeeds
+  genres: state.recommendation.availableGenreSeeds,
+  activeSeedSlot: state.recommendation.activeSeedSlot
 });
 
 function mapDispatchToProps(dispatch: any) {
@@ -30,6 +31,7 @@ interface CombinedSearchProps {
   foundArtists: Array<Artist> | null;
   foundTracks: Array<Track> | null;
   genres: Array<string> | null;
+  activeSeedSlot: number | null;
   searchItems(query: string, types: Array<SearchTypes>): any;
   setSeed(seed: Artist | Track | string, index: number): any;
 };
@@ -63,7 +65,8 @@ class ConnectedCombinedSearch extends React.Component<CombinedSearchProps, {}> {
           <label>Artists</label>
           {this.props.foundArtists?.length === 0 ?
             <span>No artists found</span> :
-            this.props.foundArtists?.map(artist => <li key={artist.id} onClick={() => this.props.setSeed(artist, 0)}><ArtistCard artist={artist}/></li>)}
+            this.props.foundArtists?.map(artist => <li key={artist.id} onClick={() =>
+              this.props.setSeed(artist.name, this.props.activeSeedSlot!)}><ArtistCard artist={artist}/></li>)}
         </div>
 
         <ul className="track">

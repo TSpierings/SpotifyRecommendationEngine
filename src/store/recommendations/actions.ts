@@ -5,7 +5,7 @@ import { getAvailableGenreSeeds } from '../../api/recommendations';
 import { getSearchItems, SearchTypes } from '../../api/search';
 import { Artist } from '../../interfaces/spotify/artist';
 import { Track } from '../../interfaces/spotify/track';
-import { POPULATE_GENRE_SEEDS, RecommendationActionTypes, SEARCH_ITEMS, SET_SEED } from './types';
+import { POPULATE_GENRE_SEEDS, RecommendationActionTypes, SEARCH_ITEMS, SET_SEED, SET_ACTIVE_SEED_SLOT } from './types';
 
 export function populateGenreSeeds(seeds: Array<string>): RecommendationActionTypes {
   return {
@@ -60,5 +60,13 @@ export function setSeed(seed: Artist | Track | string, index: number): Recommend
   return {
     type: SET_SEED,
     payload: { seed, index }
+  }
+}
+
+
+export function setActiveSeedSlot(slot: number): RecommendationActionTypes {
+  return {
+    type: SET_ACTIVE_SEED_SLOT,
+    payload: slot
   }
 }

@@ -4,12 +4,14 @@ import { Track } from "../../interfaces/spotify/track";
 export const POPULATE_GENRE_SEEDS = 'POPULATE_GENRE_SEEDS';
 export const SEARCH_ITEMS = 'SEARCH_ITEMS';
 export const SET_SEED = 'SET_SEED';
+export const SET_ACTIVE_SEED_SLOT = 'SET_ACTIVE_SEED_SLOT';
 
 export interface RecommendationState {
   availableGenreSeeds: Array<string> | null;
   foundArtists: Array<Artist> | null;
   foundTracks: Array<Track> | null;
   selectedSeeds: Array<Artist | Track | string | null>;
+  activeSeedSlot: number | null;
 };
 
 interface PopulateGenreSeedsAction {
@@ -27,4 +29,9 @@ interface SetSeedAction {
   payload: { seed: Artist | Track | string, index: number }
 }
 
-export type RecommendationActionTypes = PopulateGenreSeedsAction | SearchItemsAction | SetSeedAction;
+interface SetActiveSeedSlot {
+  type: typeof SET_ACTIVE_SEED_SLOT,
+  payload: number
+}
+
+export type RecommendationActionTypes = PopulateGenreSeedsAction | SearchItemsAction | SetSeedAction | SetActiveSeedSlot;
