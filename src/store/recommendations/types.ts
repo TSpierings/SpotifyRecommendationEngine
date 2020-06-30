@@ -5,6 +5,7 @@ export const POPULATE_GENRE_SEEDS = 'POPULATE_GENRE_SEEDS';
 export const SEARCH_ITEMS = 'SEARCH_ITEMS';
 export const SET_SEED = 'SET_SEED';
 export const SET_ACTIVE_SEED_SLOT = 'SET_ACTIVE_SEED_SLOT';
+export const SET_RECOMMENDATION_RESULTS = 'SET_RECOMMENDATION_RESULTS';
 
 export interface RecommendationState {
   availableGenreSeeds: Array<string> | null;
@@ -12,6 +13,7 @@ export interface RecommendationState {
   foundTracks: Array<Track> | null;
   selectedSeeds: Array<Artist | Track | string | null>;
   activeSeedSlot: number | null;
+  recommendationResults: Array<Track> | null;
 };
 
 interface PopulateGenreSeedsAction {
@@ -34,4 +36,9 @@ interface SetActiveSeedSlot {
   payload: number
 }
 
-export type RecommendationActionTypes = PopulateGenreSeedsAction | SearchItemsAction | SetSeedAction | SetActiveSeedSlot;
+interface SetRecommendationResults {
+  type: typeof SET_RECOMMENDATION_RESULTS,
+  payload: Array<Track>
+}
+
+export type RecommendationActionTypes = PopulateGenreSeedsAction | SearchItemsAction | SetSeedAction | SetActiveSeedSlot | SetRecommendationResults;
