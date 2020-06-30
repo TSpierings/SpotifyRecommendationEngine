@@ -5,10 +5,9 @@ import { Track } from '../../interfaces/spotify/track';
 import { RootState } from '../../store';
 import { fetchAndPopulateGenreSeeds, setActiveSeedSlot } from '../../store/recommendations/actions';
 import CombinedSearch from '../combined-search/combined-search';
-import './recommender.scss';
 import { SeedSlot } from '../seed-slot/seed-slot';
-import { getRecommendations } from '../../api/recommendations';
-import { isString } from 'util';
+import './recommender.scss';
+import RecommendationResults from '../recommendaation-results/recommendation-results';
 
 const mapStateToProps = (state: RootState) => ({
   access_token: state.authentication.access_token,
@@ -39,23 +38,6 @@ class ConnectedRecommender extends React.Component<RecommenderProps, {}> {
     this.props.fetchAndPopulateGenreSeeds();
   }
 
-  recommend() {
-    const tracks = this.props.selectedSeeds
-      .filter(seed => !isString(seed) && seed?.type === 'track')
-      .map(track => (track as Track).id);
-    const artists = this.props.selectedSeeds
-      .filter(seed => !isString(seed) && seed?.type === 'artist')
-      .map(artist => (artist as Artist).id);
-    const genres = this.props.selectedSeeds
-      .filter(seed => isString(seed))
-      .map(genre => genre! as string);
-
-    getRecommendations(this.props.access_token!, artists, tracks, genres)
-      .then(response => {
-        console.log(response)
-      });
-  }
-
   render() {
     return <div className="recommender">
       <header>
@@ -72,9 +54,7 @@ class ConnectedRecommender extends React.Component<RecommenderProps, {}> {
       </section>
       <section className="tools">
         <CombinedSearch />
-        <section className="recommend-button">
-          <button onClick={() => this.recommend()}>Recommend something</button>
-        </section>
+        <RecommendationResults />        
       </section>
       <nav>
         <a href="/">Home</a> |
