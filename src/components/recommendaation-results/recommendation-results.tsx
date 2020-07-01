@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Track } from '../../interfaces/spotify/track';
 import { RootState } from '../../store';
 import { fetchRecommendationResults } from '../../store/recommendations/actions';
+import { TrackCard } from '../track-card/track-card';
 import './recommendation-results.scss';
 
 const mapStateToProps = (state: RootState) => ({
@@ -29,9 +30,16 @@ export class ConnectedRecommendationResults extends React.Component<Recommendati
   }
 
   render() {
-    return <section className="recommend-button">
-      <button onClick={() => this.props.fetchRecommendationResults()}>Recommend something</button>
-    </section>
+    return <div className="recommendation-results">
+      <section className="button">
+        <button onClick={() => this.props.fetchRecommendationResults()}>Recommend something</button>
+      </section>
+      <ul className="tracks">
+        {this.props.recommendationResults?.length === 0 ? 
+          <span>No results</span> :
+          this.props.recommendationResults?.map(track => <li key={track.id}><TrackCard track={track}/></li>)}
+      </ul>
+    </div>
   }
 }
 

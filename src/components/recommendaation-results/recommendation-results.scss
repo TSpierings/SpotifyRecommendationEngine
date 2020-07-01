@@ -1,4 +1,27 @@
-.recommend-button {
-  align-items: center;
-  justify-content: center;
+.recommendation-results {
+  display: flex;
+  flex-direction: column;
+  
+  .button {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tracks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 22px;
+
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 4px;
+      border-bottom: 1px solid black;
+      max-width: 400px;
+      width: 100%;
+    }
+
+  }
 }
