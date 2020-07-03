@@ -13,5 +13,5 @@ export const AuthenticationDetails = {
  * A redirect to Spotify's authenticate URI with the necessary authentication details.
  */
 export function authenticate() {
-  window.location.href = `${AuthenticationDetails.uri}?client_id=${AuthenticationDetails.clientId}&response_type=${AuthenticationDetails.responseType}&redirect_uri=${AuthenticationDetails.redirectUri}&scopes=${AuthenticationDetails.scopes}`;
+  window.location.href = `${AuthenticationDetails.uri}?client_id=${AuthenticationDetails.clientId}&response_type=${AuthenticationDetails.responseType}&redirect_uri=${AuthenticationDetails.redirectUri}&scope=${AuthenticationDetails.scopes}`;
 }
